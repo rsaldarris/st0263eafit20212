@@ -4,9 +4,8 @@ import errno
 import sys
 
 headerLength = 10
-IP = "127.0.0.1"
-port = 4444
-
+IP = ""
+port = 3333
 print('Connect, write your Username')
 while True:
     myUsername = input("User: ")
@@ -17,15 +16,12 @@ while True:
 
 conection = socket.SOCK_STREAM
 addripv4 = socket.AF_INET
-
 socketCliente = socket.socket(addripv4, conection)
 socketCliente.connect((IP, port))
 socketCliente.setblocking(False)
-
 username = myUsername.encode('utf-8')
 userHeader = f"{len(username):<{headerLength}}".encode('utf-8')
 socketCliente.send(userHeader + username)
-
 while True:
 
     message = input('{} > '.format(myUsername))

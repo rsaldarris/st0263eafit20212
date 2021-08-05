@@ -2,12 +2,10 @@ import socket
 import select
 
 headerLength = 10
-IP = "127.0.0.1"
-port = 4444
-
+IP = ""
+port = 3333
 addripv4 = socket.AF_INET
 conection = socket.SOCK_STREAM 
-
 socketServer = socket.socket(addripv4, conection)
 socketServer.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 socketServer.bind((IP, port))
