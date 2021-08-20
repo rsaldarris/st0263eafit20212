@@ -1,6 +1,6 @@
 # Topicos Especiales en Telemática Laboratorio 2
 
-## Autor: Ricardo Saldarriaga Serna
+## Autor: Ricardo Saldarriaga Serna 201810038010
 
 ## Descripción
 En el segundo laboratorio de la materia se podrá evidenciar el uso del protocolo HTTP, con el objetivo de crear una aplicación de chat grupal, siendo la arquitectura de este Cliente/Servidor, haciendo posible que dos o más clientes se puedan comunicar entre ellos por medio del chat, con la condición de que el servidor este corriendo. Para hacer esto posible se usarán instancias EC2 de AWS, siendo una la que actue como servidor y el resto como clientes.
