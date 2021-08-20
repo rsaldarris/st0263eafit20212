@@ -1,9 +1,20 @@
 import socket
 import select
+import sys
 
 headerLength = 10
-IP = ""
-port = 3333
+
+
+if len(sys.argv) != 3:
+	print ("How to make it work: script, IP address, PORT number")
+	exit()
+
+# The first argument from the prompt is saved in IP_ADDRESS as a IP address.
+IP = str(sys.argv[1])
+
+# The second argument from the prompt is saved in PORT as a port number.
+port = int(sys.argv[2])
+
 addripv4 = socket.AF_INET
 conection = socket.SOCK_STREAM 
 socketServer = socket.socket(addripv4, conection)
