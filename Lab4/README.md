@@ -58,4 +58,15 @@ Despues de que los clientes estén conectados se les pedira su usuario y correo,
 
 Para la creacion de este laboratorio se tuvo en cuenta los siguientes links
 
+https://www.pragma.com.co/academia/lecciones/conozcamos-sobre-rabbitmq-sus-componentes-y-beneficios
 https://www.rabbitmq.com/getstarted.html
+
+## Mas acerca de RabbitMQ (Punto 10)
+RabbitMQ implementa el protocolo mensajería de capa de aplicación AMQP (Advanced Message Queueing Protocol), el cual está enfocado en la comunicación de mensajes asíncronos con garantía de entrega, a través de confirmaciones de recepción de mensajes desde el broker al productor y desde los consumidores al broker.
+En una forma simplificada, en RabbitMQ se definen colas que van a almacenar los mensajes que envían los productores hasta que las aplicaciones consumidoras obtienen el mensaje y lo procesan. Esto nos permite diseñar e implementar sistemas distribuidos, en los cuales un sistema se divide en módulos independientes que se comunican entre sí a través de mensajes.
+
+Tipos de Mensaje:
+![Directo](https://user-images.githubusercontent.com/37939454/132930207-abc94b1d-7b16-4479-b79c-53eef301ecca.jpg)
+Un mensaje directo seria enviado a una unica direccion es decir a Apto 010
+Un mensaje topic envia a un grupo que cumpla cierto requisito es decir, si digo envie a Apto 00*, se enviaria a la Apto 001 y 002
+Un mensaje fanout seria enviado a todos
