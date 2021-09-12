@@ -1,4 +1,5 @@
 import pika
+import sys
 
 if len(sys.argv) != 2:
 	print ("How to make it work: script, IP address")
@@ -12,6 +13,11 @@ channel = connection.channel()
 def callback(ch, method, properties, body):
         print(f'{body} is received')
 channel.basic_consume(queue="my_app", on_message_callback=callback, auto_ack=True)
-channel.start_consuming()
 
+while True:
+    try:
+        channel.start_consuming()
 
+    except KeyboardInterrupt:
+        channel.stop_consuming()
+        sys.exit()

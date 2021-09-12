@@ -32,26 +32,28 @@ while True:
         print('Write your Email')
 
 msg = " "+myEmail+" "+myUsername
-while True:
-    task = input("Task: ")
-    if(task == "Exit"):
-        sys.exit()
-    if len(task) > 0:
-        task+=msg
-        channel.basic_publish(exchange='',
-                      routing_key='hello',
-                      body=task)
-        break
-    else:
-        print('Write the task or write Exit to exit the programm')
 
-
-# message = ' '.join(sys.argv[1:]) or "Hello World!"
-channel.basic_publish(exchange='',
-                      routing_key='hello',
-                      body=message)
 print("Runnning Producer Application...")
-print(" [x] Sent %r" % message)
-connection.close()
+while True:
+    try:
+        task = input("Task: ")
+        if(task == "Exit"):
+            connection.close()
+            sys.exit()
+        if len(task) > 0:
+            task+=msg
+            channel.basic_publish(exchange='',
+                        routing_key='hello',
+                        body=task)
+            print(" [x] Sent %r" % task)
+            break
+        else:
+            print('Write the task or write Exit to exit the programm')
+
+    except KeyboardInterrupt:
+        connection.close()
+        sys.exit()
+
+
 
 
