@@ -34,7 +34,7 @@ while True:
 msg = " "+myEmail+" "+myUsername
 while True:
     task = input("Task: ")
-    if(task == "Exit")
+    if(task == "Exit"):
         sys.exit()
     if len(task) > 0:
         task+=msg
