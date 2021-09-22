@@ -1,0 +1,12 @@
+Podemos decir que la base de datos no va a estar tan cargada.
+Podemos escalar horizontalmente nuestras maquinas.
+Esuqema felxible, permite la insercion de datos semi estructurados.
+No soporta JOIN, al recibir datos tan distintos y de forma tan flexible.
+No garantiza teorema ACID.
+Garatiza teorema BASE
+
+Almacena los datos con pares clave-valor
+▸ La clave es el identificador único
+▸ Son muy simples à Facilidad en el escalado
+▸ Muy rápidas
+▸ Algunas trabajan directamente en memoria
