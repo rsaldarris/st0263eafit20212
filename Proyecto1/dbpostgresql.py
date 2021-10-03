@@ -1,6 +1,7 @@
 import psycopg2
 import re
 from environs import Env
+import mysql.connector
 
 class DBPostgresql:
 
@@ -9,6 +10,7 @@ class DBPostgresql:
         self._schema = schema
         env = Env()
         env.read_env()
+        # self._connect = mysql.connector.connect(
         self._connect = psycopg2.connect(
             host=env('POSTGRES_HOST'), 
             database=env('POSTGRES_DB'), 
@@ -58,8 +60,8 @@ class DBPostgresql:
 
     def insert(self, data):
 
-        values = "'" + "', '".join(data.values()) + "'"
-        query = f'INSERT INTO public.{self._table_name} ({", ".join(data.keys())}) VALUES ({values});'
+        values = "'" + "', '".join(str(x) for x in data.values()) + "'"
+        query = f'INSERT INTO public.{self._table_name} ({", ".join(str(x) for x in data.keys())}) VALUES ({values});'
 
         self._launch_query(query)
 
@@ -69,14 +71,17 @@ class DBPostgresql:
 
         list_update = []
         for field_name, field_value in data.items():
-            list_update.append(f"{field_name}='{field_value}'")
+            if field_name == "KEY":
+                list_update.append(f"{field_name}={field_value}")
+            else:
+                list_update.append(f"{field_name}='{field_value}'")
         
 
-        query = f'UPDATE public.{self._table_name} SET {", ".join(list_update)} WHERE id = {crkey} AND key = {crvalue};'
+        query = f'UPDATE public.{self._table_name} SET {", ".join(list_update)} WHERE key = {crkey} AND value = \'{crvalue}\';'
         self._launch_query(query)
 
     def delete(self, crkey, crvalue):
-        query = f'DELETE FROM public.{self._table_name} WHERE id = {crkey} AND key = {crvalue};'
+        query = f'DELETE FROM public.{self._table_name} WHERE key = {crkey} AND value = \'{crvalue}\';'
 
         self._launch_query(query)
     
@@ -95,16 +100,18 @@ class DBPostgresql:
 
         return data
 
-    def get_by_filters(self, filters=None):
+    def get_by_filters(self, key=None):
 
         list_filters = []
-
+        
         where = '1=1'
-        if filters is not None:
-            for field_name, field_value in filters.items():
-                list_filters.append(f"{field_name} LIKE '%{field_value}%'")
+        if key is not None:
+            for field_value in key:
+                list_filters.append(f"key = {field_value}")
 
                 where = " AND ".join(list_filters)
+            # where = f"key = {key}"
+
 
         query = f'SELECT * FROM public.{self._table_name} WHERE {where};'
 
