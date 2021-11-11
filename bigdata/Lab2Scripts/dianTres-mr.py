@@ -7,7 +7,7 @@ class MRWordFrequencyCount(MRJob):
       yield idemp, str(sector)
 
     def reducer(self, idemp, values):
-      val = str(values) + str(values)
+      val = list(values)
       yield idemp, val
 
 if __name__ == '__main__':
