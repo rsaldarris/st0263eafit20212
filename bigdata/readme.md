@@ -2,6 +2,7 @@
 
 ## Autores Ricardo Saldarriaga Serna
 
+Todos los laboratorios cuentan con screenshots del progreso y como fueron usados
 ## Laboratorio 0
 ### Descripcion
 En este Laboratirio se creara un cluster con EMR de AWS, siguiendo el paso a paso de los videos:
@@ -77,6 +78,37 @@ hdfs dfs -copyFromLocal ./* /user/hadoop/datasets/
 hadoop distcp /user/hadoop/datasets/* s3a://datasetsrsaldarris/datasets/
 ```
 De esta forma tenemos todo guardado en el bucket
+
+## Laboratorio 2
+En este laboratorio hicimos uso del Map-reduce.
+
+### Map Reduce
+Anteriormente, en los sistemas tradicionales, las tecnologías se han enfocado en traer los datos a los sistemas de almacenamiento. Sin embargo, en los procesos Hadoop, se trata de acercar el procesamiento al lugar en donde se encuentran almacenados los datos y así aprovechar técnicas de paralelización, aumentando de manera importante la escalabilidad y el rendimiento de los sistemas que trabajan con grandes cantidades de datos.
+
+Hadoop MapReduce es un paradigma de procesamiento de datos caracterizado por dividirse en dos fases o pasos diferenciados: Map y Reduce. Estos subprocesos asociados a la tarea se ejecutan de manera distribuida, en diferentes nodos de procesamiento o esclavos. Para controlar y gestionar su ejecución, existe un proceso Master o Job Tracker. También es el encargado de aceptar los nuevos trabajos enviados al sistema por los clientes.
+
+Este sistema de procesamiento se apoya en tecnologías de almacenamiento de datos distribuidas, en cuyos nodos se ejecutan estas operaciones de tipo map y reduce. El sistema de ficheros distribuido de Hadoop es HDFS (Hadoop Distributed File System), encargado de almacenar los ficheros divididos en bloques de datos. HDFS proporciona la división previa de los datos en bloques que necesita MapReduce para ejecutar. Los resultados del procesamiento se pueden almacenar en el mismo sistema de almacenamiento o bien en una base de datos o sistema externo.
+
+En este laboratorio se decidio elegir el punto 1, que trataba de datos de la Dian, se crearon 3 archivos diferentes para cumplir la meta, para poder usarlos utilizaremos los siguientes comandos
+
+```
+git clone https://github.com/rsaldarris/st0263eafit20212.git
+```
+Asi descargaremos los archivos necesarios, ahora nos iremos hasta la carpeta de lso scripts en los que estan los 3 archivos .py
+```
+cd .\bigdata\Lab2Scripts\   
+```
+Ahi tendremos los 3 archivos como dian(numerodeactividad).py, para usarlos usaremos el comando:
+```
+python .\dian-mr(numerodeactividad).py ..\bigdataLab2\datasets\otros\dataempleados.txt
+```
+Es decir si queremos el punto 1 usaremos el comando:
+```
+python .\dianUno-mr.py ..\bigdataLab2\datasets\otros\dataempleados.txt
+```
+
+
+
 ## Referencias
 - https://searchaws.techtarget.com/definition/Amazon-Elastic-MapReduce-Amazon-EMR
 - https://aws.amazon.com/es/s3/
@@ -84,5 +116,6 @@ De esta forma tenemos todo guardado en el bucket
 - https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-jupyterhub.html
 - https://aws.amazon.com/es/blogs/machine-learning/running-on-demand-serverless-apache-spark-data-processing-jobs-using-amazon-sagemaker-managed-spark-containers-and-the-amazon-sagemaker-sdk/
 - https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-zeppelin.html
+- https://aprenderbigdata.com/hadoop-mapreduce/
 
 
