@@ -107,7 +107,57 @@ Es decir si queremos el punto 1 usaremos el comando:
 python .\dianUno-mr.py ..\bigdataLab2\datasets\otros\dataempleados.txt
 ```
 
+## Laboratorio 3 SPARK
 
+Se siguio el video de https://www.youtube.com/watch?v=mZsB50NApHI&ab_channel=EdwinNelsonMontoya para hacer la primera parte del laboratorio, el guardado del WORDCOUNT en HDFS tanto en SSH nativo, como corriendo un programa desde SSH y haciendolo desde el JupyterHub
+
+Para hacerlo desde el SSH nativo usaremos los siguientes comandos
+<b>(Los datos del dataset deben estar guardados con anterioridad en nuestro S3)</b>
+
+```
+>>> files_rdd = sc.textFile("s3://<direccionPropiaS3>/gutenberg-small/*.txt")
+>>> wc_unsort = files_rdd.flatMap(lambda line: line.split()).map(lambda word: (word, 1)).reduceByKey(lambda a, b: a + b)
+>>> wc = wc_unsort.sortBy(lambda a: -a[1])
+>>> for tupla in wc.take(10):
+>>>     print(tupla)
+>>> wc.saveAsTextFile("hdfs:///tmp/wcout1")
+```
+Con esto tendremos la informacion guardada en HDFS desde SSH nativo, para hacerlo con el codigo de python debemos descargar el git (que ya hemos descargado en los otros labs) e irnos hasta la carpeta y modificar unas lineas
+
+```
+cd st0263_20212/bigdata/03-spark/
+vim wc-pyspark.py
+```
+Ahora dentro del archivo cambiaremos la direccion del S3 y el savefile a wcout2 y lo correremos con el codigo
+```
+spark-submit --master yarn --deploy-mode cluster wc-pyspark.py
+```
+por ultimo en nuestro cluster abriremos Jupyeter HUB,
+
+<b> user: jovyan password: jupyter </b>
+
+y dentro del jupyter haremos lo mismo que en el SSH nativo y pondremos el codigo
+
+```
+files_rdd = sc.textFile("s3://<direccionPropiaS3>/gutenberg-small/*.txt")
+wc_unsort = files_rdd.flatMap(lambda line: line.split()).map(lambda word: (word, 1)).reduceByKey(lambda a, b: a + b)
+wc = wc_unsort.sortBy(lambda a: -a[1])
+for tupla in wc.take(10):
+     print(tupla)
+wc.saveAsTextFile("hdfs:///tmp/wcout3")
+```
+Con esto ya tendremos hecho la parte 1 del laboratorio 3
+
+### <b>Las demas partes del laboratorio estan en la carpeta Lab3Spark, en los que son los ipybn </b>
+
+## Lab 4
+Todos los datos del lab 4 se hiceron con el video https://www.youtube.com/watch?v=zsic9XS1R-A&ab_channel=EdwinNelsonMontoya
+
+Para subir los datos al hive lo usamos desde el HUE, que nos permitia hacerlo desde forma manual o con linea de codigo, para subirlo manual es tan sencillo como colocarnos en la pestaña de editor seleccionamos Hive y en la pestaña de databases veremos el simbolo de agregar (+) ya de ahi le daremos la direccion del archivo en S3 (<i>El archivo debe estar en una carpeta sola</i>)
+
+### <b> Los demas archivos quedaran en la carpeta Lab4Hive en el ipynb y el zpln</b> 
+
+## <i><b> Es de gran importancia ver las carpetas y la envidencia en la carpeta de Imagenes </i></b>
 
 ## Referencias
 - https://searchaws.techtarget.com/definition/Amazon-Elastic-MapReduce-Amazon-EMR
